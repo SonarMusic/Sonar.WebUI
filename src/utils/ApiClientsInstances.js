@@ -1,10 +1,11 @@
-import {UserClient} from "../api/UserClient.ts";
-import {PlaylistClient, UserTracksClient} from "../api/UserTracksClient.ts";
+import UserClient from "../api/UserClient";
+import UserTracksClient from "../api/UserTracksClient";
+import PlaylistClient from "../api/PlaylistClient";
 
-export const TracksModuleUrl = "https://127.0.0.1:7153";
+export const TracksModuleUrl = "https://localhost:7153";
 
-export const UserApiClient = new UserClient("https://127.0.0.1:7062");
+export const UserApiClient = new UserClient("https://localhost:7062");
 
-export const UserTracksApiClient = new UserTracksClient("https://127.0.0.1:7055");
+export const UserTracksApiClient = new UserTracksClient("https://localhost:7055");
 
-export const PlaylistApiClient = new PlaylistClient("https://127.0.0.1:7055");
+export const PlaylistApiClient = new PlaylistClient("https://localhost:7055");
