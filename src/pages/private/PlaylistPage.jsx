@@ -12,7 +12,7 @@ const PlaylistPage = () => {
         UserTracksApiClient.getAllTacks(localStorage.getItem('token')).then(t => t)
     );
 
-    const {isLoading, error, data: playlist} = useQuery('playlistTracks', () =>
+    const {isLoading, data: playlist} = useQuery('playlistTracks', () =>
         PlaylistApiClient.getPlaylist(localStorage.getItem('token'), params.id).then(playlist => {return {
             name: playlist.name,
             tracks: [...playlist.tracks.sort((t1, t2) => {return t1.number - t2.number})]
@@ -54,10 +54,8 @@ const PlaylistPage = () => {
                         </div>
                         <div className="modal-body">
                             <ul className="list-group list-group-flush">
-                                {isTracksLoading ?
-                                    <Loader/>
-                                    :
-                                    allTracks.map(t =>
+                                {isTracksLoading ? <Loader/>
+                                    : allTracks.map(t =>
                                         <a onClick={() => addTrackToPlaylist(t.id)} key={t.id} className="list-group-item list-group-item-action">{t.name}</a>
                                     )
                                 }

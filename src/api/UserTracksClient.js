@@ -28,28 +28,4 @@ export default class UserTracksClient {
             throw ApiException(result.data, result.status, result);
         })
     }
-
-    getTrack(token, trackId) {
-        return this.client.request({
-            method: "GET",
-            url: `/tracks/`,
-            params: {
-                trackId: trackId
-            },
-            headers: {
-                Accept: "text/plain",
-                Token: token
-            }
-        })
-        .catch(error => {
-            throw error;
-        })
-        .then(result => {
-            if (result.status === 200) {
-                return result.data;
-            }
-
-            throw ApiException(result.data, result.status, result);
-        })
-    }
 }

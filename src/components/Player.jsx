@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useRef} from 'react';
 import ReactPlayer from "react-player";
 import cs from './Player.module.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'

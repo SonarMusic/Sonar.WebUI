@@ -1,6 +1,5 @@
 import React, {useContext, useState} from 'react';
 import {UserApiClient} from "../../utils/ApiClientsInstances";
-import {UserLoginDto} from "../../api/UserClient.js";
 import {AuthorizationContext} from "../../context";
 import {useNavigate} from "react-router-dom";
 

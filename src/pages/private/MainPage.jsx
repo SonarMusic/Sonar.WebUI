@@ -1,22 +1,18 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import TracksList from "../../components/TracksList";
-import {useFetching} from "../../hooks/useFetching";
 import {TracksModuleUrl, UserTracksApiClient} from "../../utils/ApiClientsInstances";
 import axios from "axios";
 import {PlayerContext} from "../../context";
+import {QueryClient, useQuery} from "react-query";
+import Loader from "../../components/UI/Loader";
 
 const MainPage = () => {
-    const [tracks, setTracks] = useState([]);
     const {currentTrack, setCurrentTrack} = useContext(PlayerContext);
-    const [trigger, setTrigger] = useState(false);
-    const [fetchTracks, isLoading, error] = useFetching(async () => {
-        UserTracksApiClient.getAllTacks(localStorage.getItem('token')).then(t => setTracks(t))
-            .catch(e =>console.log(e))
-    })
 
-    useEffect(() => {
-        fetchTracks();
-    }, [trigger])
+    const queryClient = new QueryClient();
+    const {data: tracks, isLoading} = useQuery('mainListTracks', () =>
+        UserTracksApiClient.getAllTacks(localStorage.getItem('token')).then(t => t)
+    );
 
     const removeTrack = async (e) => {
         e.stopPropagation();
@@ -29,13 +25,16 @@ const MainPage = () => {
         if (currentTrack.id === trackId) {
             setCurrentTrack({id: "", title: ""})
         }
-        setTrigger(!trigger);
+        await queryClient.invalidateQueries('mainListTracks');
     }
 
     return (
         <div className="container">
             <p className="h1 text-center">All tracks</p>
-            <TracksList actionButton={{text:"Delete track", type:"danger", callback: removeTrack}} tracks={tracks}/>
+            {isLoading
+                ? <TracksList actionButton={{text:"Delete track", type:"danger", callback: removeTrack}} tracks={tracks}/>
+                : <Loader/>
+            }
         </div>
     );
 };

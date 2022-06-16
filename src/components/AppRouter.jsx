@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {AuthorizationContext, PlayerContext, PlaylistContext} from "../context";
+import {AuthorizationContext, PlayerContext} from "../context";
 import Loader from "./UI/Loader";
 import Navbar from "./Navbar/Navbar";
 import MainPage from "../pages/private/MainPage";

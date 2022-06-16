@@ -10,7 +10,6 @@ const TracksListItem = ({itemId, itemTitle, number, actionButton}) => {
     }
 
     return (
-
         <div onClick={selectTrack} className="list-group-item list-group-item-action">
             <div className="container-fluid">
                 <div className="row">

@@ -1,16 +1,15 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import './Navbar.css'
 import {Link} from "react-router-dom";
-import {PlaylistApiClient, UserApiClient} from "../../utils/ApiClientsInstances";
-import {AuthorizationContext, PlaylistContext} from "../../context";
-import {useFetching} from "../../hooks/useFetching";
+import {PlaylistApiClient} from "../../utils/ApiClientsInstances";
+import {AuthorizationContext} from "../../context";
 import NavbarCategory from "./NavbarCategory";
 import {useQuery} from "react-query";
 
 const Navbar = () => {
     const {setIsAuthorized} = useContext(AuthorizationContext);
 
-    const {isLoading, error, data: playlists} = useQuery('playlistsList',  async () =>
+    const {isLoading, data: playlists} = useQuery('playlistsList',  async () =>
         PlaylistApiClient.getUserPlaylists(localStorage.getItem('token')).then(t => t)
     );
 
