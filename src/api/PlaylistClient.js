@@ -76,4 +76,54 @@ export default class PlaylistClient {
             throw ApiException(result.data, result.status, result);
         });
     }
+
+    addTrackToPlaylist(token, playlistId, trackId) {
+        return this.client.request({
+            method: "POST",
+            url: `/playlist/track/`,
+            headers: {
+                Accept: "text/plain",
+                Token: token
+            },
+            params: {
+                playlistId: playlistId,
+                trackId: trackId
+            }
+        })
+        .catch(error => {
+            throw error;
+        })
+        .then(result => {
+            if (result.status === 200) {
+                return result.data;
+            }
+
+            throw ApiException(result.data, result.status, result);
+        });
+    }
+
+    removeTrackFromPlaylist(token, playlistId, trackId) {
+        return this.client.request({
+            method: "DELETE",
+            url: `/playlist/track/`,
+            headers: {
+                Accept: "text/plain",
+                Token: token
+            },
+            params: {
+                playlistId: playlistId,
+                trackId: trackId
+            }
+        })
+        .catch(error => {
+            throw error;
+        })
+        .then(result => {
+            if (result.status === 200) {
+                return result.data;
+            }
+
+            throw ApiException(result.data, result.status, result);
+        });
+    }
 }
