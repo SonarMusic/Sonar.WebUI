@@ -10,7 +10,7 @@ const MainPage = () => {
     const {currentTrack, setCurrentTrack} = useContext(PlayerContext);
     const [trigger, setTrigger] = useState(false);
     const [fetchTracks, isLoading, error] = useFetching(async () => {
-        UserTracksApiClient.all2(localStorage.getItem('token')).then(t => setTracks(t))
+        UserTracksApiClient.getAllTacks(localStorage.getItem('token')).then(t => setTracks(t))
             .catch(e =>console.log(e))
     })
 

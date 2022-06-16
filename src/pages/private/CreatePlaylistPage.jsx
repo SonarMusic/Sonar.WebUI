@@ -13,7 +13,7 @@ const CreatePlaylistPage = () => {
         e.preventDefault();
         setError("");
         try {
-            let id = await PlaylistApiClient.playlistPOST(localStorage.getItem('token'), playlistName);
+            let id = await PlaylistApiClient.createPlaylist(localStorage.getItem('token'), playlistName);
             setTrigger(!trigger);
             navigate(`/playlist/${id}`)
         } catch (e) {

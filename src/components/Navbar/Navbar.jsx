@@ -11,7 +11,7 @@ const Navbar = () => {
     const {setIsAuthorized} = useContext(AuthorizationContext);
     const [playlists, setPlaylist] = useState([]);
     const [fetchPlaylists, isLoading, error] = useFetching(async () => {
-        const fetchedPlaylists = await PlaylistApiClient.all(localStorage.getItem('token'));
+        const fetchedPlaylists = await PlaylistApiClient.getUserPlaylists(localStorage.getItem('token'));
         setPlaylist(fetchedPlaylists);
     })
 
@@ -21,10 +21,6 @@ const Navbar = () => {
 
     const logout = (e) => {
         e.preventDefault();
-        try {
-            UserApiClient.logout(localStorage.getItem('token'));
-        } catch (e) {
-        }
         localStorage.removeItem('token');
         setIsAuthorized(false);
     }

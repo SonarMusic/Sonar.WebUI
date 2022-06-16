@@ -10,7 +10,7 @@ const PlaylistPage = () => {
     const [trigger, setTrigger] = useState(false);
     const [playlist, setPlaylist] = useState(null);
     const [fetchPlaylistTracks, isLoading, error] = useFetching(async (id) => {
-        let playlist = await PlaylistApiClient.playlistGET(localStorage.getItem('token'), id);
+        let playlist = await PlaylistApiClient.getPlaylist(localStorage.getItem('token'), id);
         let tracks = [...playlist.tracks.sort((t1, t2) => {return t1.number - t2.number})]
             .map(t => {return  {
                 id : t.track.id,

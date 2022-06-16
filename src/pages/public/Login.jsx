@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {UserApiClient} from "../../utils/ApiClientsInstances";
-import {UserLoginDto} from "../../api/UserClient.ts";
+import {UserLoginDto} from "../../api/UserClient.js";
 import {AuthorizationContext} from "../../context";
 import {useNavigate} from "react-router-dom";
 
@@ -14,10 +14,11 @@ const Login = () => {
         setError("");
         e.preventDefault();
         try {
-            let token = await UserApiClient.login(new UserLoginDto(user));
+            let token = await UserApiClient.login(user.email, user.password);
             localStorage.setItem('token', token);
             setIsAuthorized(true);
         } catch (e) {
+            console.log(e)
             setError(e.message);
         }
     }
