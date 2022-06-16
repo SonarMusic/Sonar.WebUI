@@ -10,10 +10,11 @@ import Register from "../pages/public/Register";
 import UploadPage from "../pages/private/UploadPage";
 import CreatePlaylistPage from "../pages/private/CreatePlaylistPage";
 import PlaylistPage from "../pages/private/PlaylistPage";
+import {QueryClient, QueryClientProvider} from "react-query";
 
 const AppRouter = () => {
     const {isAuthorized, isLoading} = useContext(AuthorizationContext);
-    const [trigger, setTrigger] = useState(false);
+    const queryClient = new QueryClient();
 
     const [currentTrack, setCurrentTrack] = useState({
         id: "",
@@ -31,11 +32,7 @@ const AppRouter = () => {
                     setCurrentTrack
                 }}
             >
-                <PlaylistContext.Provider
-                    value={{
-                        trigger,
-                        setTrigger
-                    }}>
+                <QueryClientProvider client={queryClient}>
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-auto">
@@ -53,7 +50,7 @@ const AppRouter = () => {
                         </div>
                         <Player/>
                     </div>
-                </PlaylistContext.Provider>
+                </QueryClientProvider>
             </PlayerContext.Provider>
             :
         <Routes>

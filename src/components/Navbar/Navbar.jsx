@@ -5,19 +5,14 @@ import {PlaylistApiClient, UserApiClient} from "../../utils/ApiClientsInstances"
 import {AuthorizationContext, PlaylistContext} from "../../context";
 import {useFetching} from "../../hooks/useFetching";
 import NavbarCategory from "./NavbarCategory";
+import {useQuery} from "react-query";
 
 const Navbar = () => {
-    const {trigger} = useContext(PlaylistContext);
     const {setIsAuthorized} = useContext(AuthorizationContext);
-    const [playlists, setPlaylist] = useState([]);
-    const [fetchPlaylists, isLoading, error] = useFetching(async () => {
-        const fetchedPlaylists = await PlaylistApiClient.getUserPlaylists(localStorage.getItem('token'));
-        setPlaylist(fetchedPlaylists);
-    })
 
-    useEffect(() => {
-        fetchPlaylists();
-    }, [trigger])
+    const {isLoading, error, data: playlists} = useQuery('playlistsList',  async () =>
+        PlaylistApiClient.getUserPlaylists(localStorage.getItem('token')).then(t => t)
+    );
 
     const logout = (e) => {
         e.preventDefault();
@@ -37,7 +32,7 @@ const Navbar = () => {
                 </NavbarCategory>
                 <NavbarCategory title="Playlists">
                             <li><Link to="/create/playlist" className="link-dark rounded">Create</Link></li>
-                            {playlists.map(p =>
+                            {isLoading ? <span>Loading...</span> : playlists.map(p =>
                                 <li key={p.id}><Link to={`/playlist/${p.id}`} className="link-dark rounded">{p.name}</Link></li>
                             )}
                 </NavbarCategory>

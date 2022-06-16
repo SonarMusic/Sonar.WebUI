@@ -1,11 +1,11 @@
 import React, {useContext, useState} from 'react';
 import {PlaylistApiClient, UserTracksApiClient} from "../../utils/ApiClientsInstances";
 import {useNavigate} from "react-router-dom";
-import {PlaylistContext} from "../../context";
+import {useQueryClient} from "react-query";
 
 const CreatePlaylistPage = () => {
     const navigate = useNavigate();
-    const {trigger, setTrigger} = useContext(PlaylistContext);
+    const queryClient = useQueryClient();
     const [playlistName, setPlaylistName] = useState("");
     const [error, setError] = useState("");
 
@@ -14,7 +14,7 @@ const CreatePlaylistPage = () => {
         setError("");
         try {
             let id = await PlaylistApiClient.createPlaylist(localStorage.getItem('token'), playlistName);
-            setTrigger(!trigger);
+            await queryClient.invalidateQueries('playlistsList');
             navigate(`/playlist/${id}`)
         } catch (e) {
             setError(e.message);
