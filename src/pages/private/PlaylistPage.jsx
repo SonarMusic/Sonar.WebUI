@@ -1,52 +1,42 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {useParams} from "react-router-dom";
 import TracksList from "../../components/TracksList";
-import {useFetching} from "../../hooks/useFetching";
 import {PlaylistApiClient, UserTracksApiClient} from "../../utils/ApiClientsInstances";
 import Loader from "../../components/UI/Loader";
-import modal from "bootstrap/js/src/modal";
+import {useQuery, useQueryClient} from "react-query";
 
 const PlaylistPage = () => {
-    const [trigger, setTrigger] = useState(false);
-    const [playlist, setPlaylist] = useState(null);
-    const [fetchPlaylistTracks, isLoading, error] = useFetching(async (id) => {
-        let playlist = await PlaylistApiClient.getPlaylist(localStorage.getItem('token'), id);
-        let tracks = [...playlist.tracks.sort((t1, t2) => {return t1.number - t2.number})]
-            .map(t => {return  {
-                id : t.track.id,
-                name : t.track.name
-            }})
-        setPlaylist({
+    const queryClient = useQueryClient();
+
+    const {isLoading: isTracksLoading, data: allTracks} = useQuery('allTracksOnPlaylistPage', () =>
+        UserTracksApiClient.getAllTacks(localStorage.getItem('token')).then(t => t)
+    );
+
+    const {isLoading, error, data: playlist} = useQuery('playlistTracks', () =>
+        PlaylistApiClient.getPlaylist(localStorage.getItem('token'), params.id).then(playlist => {return {
             name: playlist.name,
-            tracks :tracks
-        })
-    })
-    const [allTracks, setAllTracks] = useState([]);
-    const [fetchTracks, isTracksLoading, tracksError] = useFetching(async () => {
-        setAllTracks(await UserTracksApiClient.all2(localStorage.getItem('token')));
-        document.getElementById("#")
-    });
+            tracks: [...playlist.tracks.sort((t1, t2) => {return t1.number - t2.number})]
+                .map(t => {return  {
+                    id : t.track.id,
+                    name : t.track.name
+                }})
+        }})
+    );
 
-    useEffect(() => {
-        fetchPlaylistTracks(params.id);
-    }, [trigger]);
-
-    useEffect(() => {
-        fetchTracks();
-    }, []);
     const params = useParams();
 
     const addTrackToPlaylist = async (id) => {
-        await PlaylistApiClient.trackPOST(localStorage.getItem('token'), params.id, id);
-        setTrigger(!trigger);
+        await PlaylistApiClient.addTrackToPlaylist(localStorage.getItem('token'), params.id, id);
+        await queryClient.invalidateQueries('playlistTracks');
         document.getElementById("closeModal").click();
     }
 
     const removeTrackFromPlaylist = async (e) => {
         const trackId = e.target.id;
-        await PlaylistApiClient.trackDELETE(localStorage.getItem('token'), params.id, trackId);
-        setTrigger(!trigger);
+        await PlaylistApiClient.removeTrackFromPlaylist(localStorage.getItem('token'), params.id, trackId);
+        await queryClient.invalidateQueries('playlistTracks');
     }
+
     return (
         <div className="container">
             <p className="h1 text-center">Playlist {isLoading ? "..." : playlist.name}</p>
