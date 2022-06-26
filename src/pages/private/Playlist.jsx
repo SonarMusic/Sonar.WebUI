@@ -6,6 +6,7 @@ import Loader from "../../components/UI/Loader";
 import {useQuery, useQueryClient} from "react-query";
 import ListElement from "../../components/ListElement";
 import {PlayerContext} from "../../context";
+import TracksListElement from "../../components/TracksListElement";
 
 const Playlist = () => {
     const queryClient = useQueryClient();
@@ -51,14 +52,7 @@ const Playlist = () => {
             {isLoading ? <Loader/> : <ItemsList
                 items={playlist.tracks}
                 elementsFactory={
-                    (item, number) =>
-                        <ListElement
-                            onClick={() => selectTrack(item.id, item.name)}
-                            number={number}
-                            key={item.id}
-                            itemTitle={item.name}>
-                            <button type="button" className="btn btn-danger" id={item.id} onClick={removeTrackFromPlaylist}>Remove trackk</button>
-                        </ListElement>}
+                    (item, number) => <TracksListElement key={number} number={number} item={item} removeAction={removeTrackFromPlaylist}/>}
             />
             }
             <button type="button" id="closeModal" className="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#addTrackToPlModal">

@@ -6,6 +6,7 @@ import {PlayerContext} from "../../context";
 import {QueryClient, useQuery} from "react-query";
 import Loader from "../../components/UI/Loader";
 import ListElement from "../../components/ListElement";
+import TracksListElement from "../../components/TracksListElement";
 
 const Main = () => {
     const {currentTrack, setCurrentTrack} = useContext(PlayerContext);
@@ -29,10 +30,6 @@ const Main = () => {
         await queryClient.invalidateQueries('mainListTracks');
     }
 
-    const selectTrack = (id, title) => {
-        setCurrentTrack({id: id, title: title})
-    }
-
     return (
         <div className="container">
             <p className="h1 text-center">All tracks</p>
@@ -42,15 +39,7 @@ const Main = () => {
                     title={"Title"}
                     items={tracks}
                     elementsFactory={
-                        (item, number) =>
-                            <ListElement
-                                onClick={() => selectTrack(item.id, item.name)}
-                                number={number}
-                                key={number}
-                                itemId={item.id}
-                                itemTitle={item.name}>
-                                <button type="button" id={item.id} className="btn btn-danger" onClick={removeTrack}>Delete track</button>
-                            </ListElement>}
+                        (item, number) => <TracksListElement key={number} number={number} item={item} removeAction={removeTrack}/>}
                 />
             }
         </div>
