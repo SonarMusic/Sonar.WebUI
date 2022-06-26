@@ -13,11 +13,13 @@ export default class UserClient {
             method: "PATCH",
             url: "/user/login",
             data: {
-                email: email,
-                password: password
+                Email: email,
+                Password: password
             }
         })
         .catch(error => {
+            if (error.isAxiosError)
+                throw new ApiException(error.response.data, error.status, error);
             throw error;
         })
         .then(result => {
@@ -25,20 +27,22 @@ export default class UserClient {
                 return result.data;
             }
 
-            throw ApiException(result.data, result.status, result);
+            throw new ApiException(result.data.response, result.status, result);
         });
     }
 
-    register(username, password) {
+    register(email, password) {
         return this.client.request({
             method: "POST",
             url: "/user/register",
             data: {
-                username: username,
-                password: password
+                Email: email,
+                Password: password
             }
         })
         .catch(error => {
+            if (error.isAxiosError)
+                throw new ApiException(error.response.data, error.status, error);
             throw error;
         })
         .then(result => {

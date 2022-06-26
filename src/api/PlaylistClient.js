@@ -18,6 +18,8 @@ export default class PlaylistClient {
             }
         })
         .catch(error => {
+            if (error.isAxiosError)
+                throw new ApiException(error.response.data, error.status, error);
             throw error;
         })
         .then(result => {
@@ -42,6 +44,8 @@ export default class PlaylistClient {
             }
         })
         .catch(error => {
+            if (error.isAxiosError)
+                throw new ApiException(error.response.data, error.status, error);
             throw error;
         })
         .then(result => {
@@ -66,6 +70,8 @@ export default class PlaylistClient {
             }
         })
         .catch(error => {
+            if (error.isAxiosError)
+                throw new ApiException(error.response.data, error.status, error);
             throw error;
         })
         .then(result => {
@@ -91,6 +97,8 @@ export default class PlaylistClient {
             }
         })
         .catch(error => {
+            if (error.isAxiosError)
+                throw new ApiException(error.response.data, error.status, error);
             throw error;
         })
         .then(result => {
@@ -116,6 +124,8 @@ export default class PlaylistClient {
             }
         })
         .catch(error => {
+            if (error.isAxiosError)
+                throw new ApiException(error.response.data, error.status, error);
             throw error;
         })
         .then(result => {
