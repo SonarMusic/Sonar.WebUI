@@ -4,7 +4,7 @@ import axios from "axios";
 import {TracksModuleUrl} from "../../utils/ApiClientsInstances";
 import {useNavigate} from "react-router-dom";
 
-const UploadPage = () => {
+const Upload = () => {
     const navigate = useNavigate();
     const [isLoading , setIsLoading] = useState(false);
     const [title, setTitle] = useState("");
@@ -71,4 +71,4 @@ const UploadPage = () => {
     );
 };
 
-export default UploadPage;
+export default Upload;

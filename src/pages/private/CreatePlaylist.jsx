@@ -3,7 +3,7 @@ import {PlaylistApiClient} from "../../utils/ApiClientsInstances";
 import {useNavigate} from "react-router-dom";
 import {useQueryClient} from "react-query";
 
-const CreatePlaylistPage = () => {
+const CreatePlaylist = () => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const [playlistName, setPlaylistName] = useState("");
@@ -46,4 +46,4 @@ const CreatePlaylistPage = () => {
     );
 };
 
-export default CreatePlaylistPage;
+export default CreatePlaylist;

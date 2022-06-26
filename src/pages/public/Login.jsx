@@ -17,7 +17,6 @@ const Login = () => {
             localStorage.setItem('token', token);
             setIsAuthorized(true);
         } catch (e) {
-            console.log(e)
             setError(e.message);
         }
     }

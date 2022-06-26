@@ -22,7 +22,7 @@ const Navbar = () => {
     return (
         <div className="sidebar flex-shrink-0 p-1 bg-white" style={{width: "280px"}}>
             <a href="/src/pages" className="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-                <span className="fs-5 fw-semibold">Collapsible</span>
+                <span className="fs-5 fw-semibold">Sonar</span>
             </a>
             <ul className="list-unstyled ps-0">
                 <NavbarCategory title="Tracks">
