@@ -2,15 +2,16 @@ import React, {useContext, useState} from 'react';
 import {AuthorizationContext, PlayerContext} from "../context";
 import Loader from "./UI/Loader";
 import Navbar from "./Navbar/Navbar";
-import MainPage from "../pages/private/MainPage";
+import Main from "../pages/private/Main";
 import Player from "./Player";
 import {Navigate, Route, Routes} from "react-router-dom";
 import Login from "../pages/public/Login";
 import Register from "../pages/public/Register";
-import UploadPage from "../pages/private/UploadPage";
-import CreatePlaylistPage from "../pages/private/CreatePlaylistPage";
-import PlaylistPage from "../pages/private/PlaylistPage";
+import Upload from "../pages/private/Upload";
+import CreatePlaylist from "../pages/private/CreatePlaylist";
+import Playlist from "../pages/private/Playlist";
 import {QueryClient, QueryClientProvider} from "react-query";
+import Friends from "../pages/private/Friends";
 
 const AppRouter = () => {
     const {isAuthorized, isLoading} = useContext(AuthorizationContext);
@@ -40,10 +41,11 @@ const AppRouter = () => {
                             </div>
                             <div className="col">
                                 <Routes>
-                                    <Route path="/" element={<MainPage/>}/>
-                                    <Route path="/upload" element={<UploadPage/>}/>
-                                    <Route path="/create/playlist" element={<CreatePlaylistPage/>}/>
-                                    <Route path="/playlist/:id" element={<PlaylistPage/>}/>
+                                    <Route path="/" element={<Main/>}/>
+                                    <Route path="/upload" element={<Upload/>}/>
+                                    <Route path="/create/playlist" element={<CreatePlaylist/>}/>
+                                    <Route path="/playlist/:id" element={<Playlist/>}/>
+                                    <Route path="/friends" element={<Friends/>}/>
                                     <Route path="*" element={<Navigate to="/"/>}/>
                                 </Routes>
                             </div>

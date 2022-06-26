@@ -18,6 +18,8 @@ export default class UserTracksClient {
             }
         })
         .catch(error => {
+            if (error.isAxiosError)
+                throw new ApiException(error.response.data, error.status, error);
             throw error;
         })
         .then(result => {

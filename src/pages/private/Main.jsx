@@ -1,12 +1,13 @@
 import React, {useContext} from 'react';
-import TracksList from "../../components/TracksList";
+import ItemsList from "../../components/ItemsList";
 import {TracksModuleUrl, UserTracksApiClient} from "../../utils/ApiClientsInstances";
 import axios from "axios";
 import {PlayerContext} from "../../context";
 import {QueryClient, useQuery} from "react-query";
 import Loader from "../../components/UI/Loader";
+import ListElement from "../../components/ListElement";
 
-const MainPage = () => {
+const Main = () => {
     const {currentTrack, setCurrentTrack} = useContext(PlayerContext);
 
     const queryClient = new QueryClient();
@@ -28,15 +29,32 @@ const MainPage = () => {
         await queryClient.invalidateQueries('mainListTracks');
     }
 
+    const selectTrack = (id, title) => {
+        setCurrentTrack({id: id, title: title})
+    }
+
     return (
         <div className="container">
             <p className="h1 text-center">All tracks</p>
             {isLoading
-                ? <TracksList actionButton={{text:"Delete track", type:"danger", callback: removeTrack}} tracks={tracks}/>
-                : <Loader/>
+                ? <Loader/>
+                : <ItemsList
+                    title={"Title"}
+                    items={tracks}
+                    elementsFactory={
+                        (item, number) =>
+                            <ListElement
+                                onClick={() => selectTrack(item.id, item.name)}
+                                number={number}
+                                key={number}
+                                itemId={item.id}
+                                itemTitle={item.name}>
+                                <button type="button" id={item.id} className="btn btn-danger" onClick={removeTrack}>Delete track</button>
+                            </ListElement>}
+                />
             }
         </div>
     );
 };
 
-export default MainPage;
+export default Main;

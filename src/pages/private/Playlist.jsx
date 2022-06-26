@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {useParams} from "react-router-dom";
-import TracksList from "../../components/TracksList";
+import ItemsList from "../../components/ItemsList";
 import {PlaylistApiClient, UserTracksApiClient} from "../../utils/ApiClientsInstances";
 import Loader from "../../components/UI/Loader";
 import {useQuery, useQueryClient} from "react-query";
+import ListElement from "../../components/ListElement";
+import {PlayerContext} from "../../context";
 
-const PlaylistPage = () => {
+const Playlist = () => {
     const queryClient = useQueryClient();
 
     const {isLoading: isTracksLoading, data: allTracks} = useQuery('allTracksOnPlaylistPage', () =>
@@ -37,10 +39,28 @@ const PlaylistPage = () => {
         await queryClient.invalidateQueries('playlistTracks');
     }
 
+    const {setCurrentTrack} = useContext(PlayerContext);
+
+    const selectTrack = (id, title) => {
+        setCurrentTrack({id: id, title: title})
+    }
+
     return (
         <div className="container">
             <p className="h1 text-center">Playlist {isLoading ? "..." : playlist.name}</p>
-            {isLoading ? <Loader/> : <TracksList actionButton={{text:"Remove from playlist", type: "danger", callback: removeTrackFromPlaylist}} tracks={playlist.tracks}></TracksList>}
+            {isLoading ? <Loader/> : <ItemsList
+                items={playlist.tracks}
+                elementsFactory={
+                    (item, number) =>
+                        <ListElement
+                            onClick={() => selectTrack(item.id, item.name)}
+                            number={number}
+                            key={item.id}
+                            itemTitle={item.name}>
+                            <button type="button" className="btn btn-danger" id={item.id} onClick={removeTrackFromPlaylist}>Remove trackk</button>
+                        </ListElement>}
+            />
+            }
             <button type="button" id="closeModal" className="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#addTrackToPlModal">
                 Add track
             </button>
@@ -73,4 +93,4 @@ const PlaylistPage = () => {
     );
 };
 
-export default PlaylistPage;
+export default Playlist;

@@ -37,6 +37,7 @@ const Navbar = () => {
                 </NavbarCategory>
                 <li className="border-top my-3"></li>
                 <NavbarCategory title="Account">
+                    <li><Link to="/friends" className="link-dark rounded">Friends</Link></li>
                     <li><a onClick={logout} className="link-dark rounded">Sign out</a></li>
                 </NavbarCategory>
             </ul>
