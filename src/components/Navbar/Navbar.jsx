@@ -16,6 +16,7 @@ const Navbar = () => {
     const logout = (e) => {
         e.preventDefault();
         localStorage.removeItem('token');
+        localStorage.removeItem('userId');
         setIsAuthorized(false);
     }
 
@@ -28,6 +29,8 @@ const Navbar = () => {
                 <NavbarCategory title="Tracks">
                     <li><Link to="/" className="link-dark rounded">All</Link></li>
                     <li><Link to="/upload" className="link-dark rounded">Upload</Link></li>
+                    <li><Link to="/import" className="link-dark rounded">Import</Link></li>
+                    <li><Link to="/access" className="link-dark rounded">Manage access</Link></li>
                 </NavbarCategory>
                 <NavbarCategory title="Playlists">
                             <li><Link to="/create/playlist" className="link-dark rounded">Create</Link></li>

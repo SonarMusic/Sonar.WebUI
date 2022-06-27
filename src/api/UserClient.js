@@ -10,7 +10,7 @@ export default class UserClient {
 
     login(email, password) {
         return this.client.request({
-            method: "PATCH",
+            method: "POST",
             url: "/user/login",
             data: {
                 Email: email,
@@ -38,6 +38,29 @@ export default class UserClient {
             data: {
                 Email: email,
                 Password: password
+            }
+        })
+        .catch(error => {
+            if (error.isAxiosError)
+                throw new ApiException(error.response.data, error.status, error);
+            throw error;
+        })
+        .then(result => {
+            if (result.status === 200) {
+                return result.data;
+            }
+
+            throw ApiException(result.data, result.status, result);
+        });
+    }
+
+    getUser(token) {
+        return this.client.request({
+            method: "GET",
+            url: "/user/get",
+            headers: {
+                Accept: "text/plain",
+                Token: token
             }
         })
         .catch(error => {

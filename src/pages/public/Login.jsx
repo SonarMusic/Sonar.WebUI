@@ -15,6 +15,7 @@ const Login = () => {
         try {
             let token = await UserApiClient.login(user.email, user.password);
             localStorage.setItem('token', token);
+            UserApiClient.getUser(token).then(u => localStorage.setItem('userId', u.id));
             setIsAuthorized(true);
         } catch (e) {
             setError(e.message);

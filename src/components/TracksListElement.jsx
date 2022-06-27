@@ -5,7 +5,7 @@ import {QueueApiClient} from "../utils/ApiClientsInstances";
 import {useQueryClient} from "react-query";
 
 const TracksListElement = ({item, number, removeAction}) => {
-    const {currentTrack, setCurrentTrack} = useContext(PlayerContext);
+    const {setCurrentTrack} = useContext(PlayerContext);
 
     const selectTrack = (id, title) => {
         setCurrentTrack({id: id, title: title})
@@ -26,7 +26,7 @@ const TracksListElement = ({item, number, removeAction}) => {
             itemId={item.id}
             itemTitle={item.name}>
             <div className="btn btn-primary me-2" onClick={(e) => {e.stopPropagation(); enqueueTrack(item.id)}}>Enqueue</div>
-            <button type="button" id={item.id} className="btn btn-danger" onClick={removeAction}>Remove track</button>
+            {removeAction && <button type="button" id={item.id} className="btn btn-danger" onClick={removeAction}>Remove track</button>}
         </ListElement>
     );
 };

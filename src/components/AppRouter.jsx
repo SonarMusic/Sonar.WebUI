@@ -12,6 +12,8 @@ import CreatePlaylist from "../pages/private/CreatePlaylist";
 import Playlist from "../pages/private/Playlist";
 import {QueryClient, QueryClientProvider} from "react-query";
 import Friends from "../pages/private/Friends";
+import Import from "../pages/private/Import";
+import ManageAccess from "../pages/private/ManageAccess";
 
 const AppRouter = () => {
     const {isAuthorized, isLoading} = useContext(AuthorizationContext);
@@ -46,6 +48,8 @@ const AppRouter = () => {
                                     <Route path="/create/playlist" element={<CreatePlaylist/>}/>
                                     <Route path="/playlist/:id" element={<Playlist/>}/>
                                     <Route path="/friends" element={<Friends/>}/>
+                                    <Route path="/import" element={<Import/>}/>
+                                    <Route path="/access" element={<ManageAccess/>}/>
                                     <Route path="*" element={<Navigate to="/"/>}/>
                                 </Routes>
                             </div>
