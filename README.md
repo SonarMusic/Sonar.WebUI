@@ -71,7 +71,7 @@
 
 * **Александр Иванов [Bibletoon](https://github.com/Bibletoon) <span style="color:red">(Main teamlead)</span>**
 * Денис Соколов [DenChika](https://github.com/DenChika)
-* Максим Полухин [Maksim Polukhin](https://github.com/Patisson4)
+* Максим Полухин [Patisson4](https://github.com/Patisson4)
 
 ### Модуль UI [**Team-4-ui**](https://github.com/is-tech-y24-1/team-4-ui)
 
