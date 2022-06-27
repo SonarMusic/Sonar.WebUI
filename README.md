@@ -45,6 +45,8 @@
 * [UserTracksManagement](https://github.com/is-tech-y24-1/team-4-2)
 * [Player](https://github.com/is-tech-y24-1/team-4-3)
 
+Скачать `ffmpeg` из интернета и закинуть `ffmpeg.exe` в папку `Sonar.Player\Sonar.Player.Api`
+
 После этого запуск приложения происходит с помощью команды 
 
 #### `npm start`
