@@ -52,3 +52,27 @@
 #### `npm start`
 
 Через некоторое время по адресу `https://localhost:3000` будет доступно приложение. При изменении исходного кода оно автоматически обновится
+
+## Авторы проекта
+
+### Модуль взаимойдествия с пользователем [**Team-4-1**](https://github.com/is-tech-y24-1/team-4-1)
+
+* **Валерий Шевченко [Walter Rabbit](https://github.com/Ar4eR-ValerA) <span style="color:green">(Teamlead)</span>**
+* Эдгар Саратовцев [aedg1r](https://github.com/aedg1r)
+* Николай Кочубеев [Nikolai Kochubeev](https://github.com/nikolaykochubeev)
+
+### Модуль управления музыкой [**Team-4-2**](https://github.com/is-tech-y24-1/team-4-2)
+
+* **Дмитрий Капанин [Dmitry Kapanin](https://github.com/ClwnYeti) <span style="color:green">(Teamlead)</span>**
+* Глеб Михайличенко [Mihailichenko Gleb](https://github.com/vaner29)
+* Сергей Слюсаренко [Serelllka](https://github.com/Serelllka)
+
+### Модуль воспроизведения музыки [**Team-4-3**](https://github.com/is-tech-y24-1/team-4-3)
+
+* **Александр Иванов [Bibletoon](https://github.com/Bibletoon) <span style="color:red">(Main teamlead)</span>**
+* Денис Соколов [DenChika](https://github.com/DenChika)
+* Максим Полухин [Maksim Polukhin](https://github.com/Patisson4)
+
+### Модуль UI [**Team-4-ui**](https://github.com/is-tech-y24-1/team-4-ui)
+
+* **Александр Иванов [Bibletoon](https://github.com/Bibletoon) <span style="color:red">(Main teamlead)</span>**
