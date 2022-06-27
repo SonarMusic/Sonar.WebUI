@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import ItemsList from "../../components/ItemsList";
 import {useQuery, useQueryClient} from "react-query";
 import {UserApiClient, UserTracksApiClient} from "../../utils/ApiClientsInstances";
 import ListElement from "../../components/ListElement";
+import {AuthorizationContext} from "../../context";
 
 const ManageAccess = () => {
+    const {authorizeState} = useContext(AuthorizationContext);
+
     const {data: tracks, isLoading} = useQuery('accessTracks', () =>
-        UserTracksApiClient.getAllTacks(localStorage.getItem('token')).then(t => t.filter(x => x.ownerId === localStorage.getItem('userId')))
+        UserTracksApiClient.getAllTacks(localStorage.getItem('token')).then(t => t.filter(x => x.ownerId === authorizeState.id))
     );
 
     const queryClient = useQueryClient();

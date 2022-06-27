@@ -2,12 +2,13 @@ import React, {useContext} from 'react';
 import './Navbar.css'
 import {Link} from "react-router-dom";
 import {PlaylistApiClient} from "../../utils/ApiClientsInstances";
-import {AuthorizationContext} from "../../context";
+import {AuthorizationContext, PlayerContext} from "../../context";
 import NavbarCategory from "./NavbarCategory";
 import {useQuery} from "react-query";
 
 const Navbar = () => {
-    const {setIsAuthorized} = useContext(AuthorizationContext);
+    const {authorizeState, setAuthorizeState} = useContext(AuthorizationContext);
+    const {setCurrentTrack} = useContext(PlayerContext);
 
     const {isLoading, data: playlists} = useQuery('playlistsList',  async () =>
         PlaylistApiClient.getUserPlaylists(localStorage.getItem('token')).then(t => t)
@@ -17,7 +18,8 @@ const Navbar = () => {
         e.preventDefault();
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
-        setIsAuthorized(false);
+        setCurrentTrack({id: "", title: ""});
+        setAuthorizeState({state: false});
     }
 
     return (
@@ -40,6 +42,7 @@ const Navbar = () => {
                 </NavbarCategory>
                 <li className="border-top my-3"></li>
                 <NavbarCategory title="Account">
+                    <li><a>{authorizeState.email}</a></li>
                     <li><Link to="/friends" className="link-dark rounded">Friends</Link></li>
                     <li><a onClick={logout} className="link-dark rounded">Sign out</a></li>
                 </NavbarCategory>

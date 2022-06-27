@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 const Login = () => {
     const [error, setError] = useState("");
     const [user, setUser] = useState({email: '', password: ''})
-    const {setIsAuthorized} = useContext(AuthorizationContext);
+    const {setAuthorizeState} = useContext(AuthorizationContext);
     const navigate = useNavigate();
 
     const login = async (e) => {
@@ -15,8 +15,8 @@ const Login = () => {
         try {
             let token = await UserApiClient.login(user.email, user.password);
             localStorage.setItem('token', token);
-            UserApiClient.getUser(token).then(u => localStorage.setItem('userId', u.id));
-            setIsAuthorized(true);
+            const userModel = await UserApiClient.getUser(token);
+            setAuthorizeState({state: true, email: user.email, id: userModel.id});
         } catch (e) {
             setError(e.message);
         }

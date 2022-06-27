@@ -7,7 +7,7 @@ const Register = () => {
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const [user, setUser] = useState({email: '', password: ''})
-    const {setIsAuthorized} = useContext(AuthorizationContext);
+    const {setAuthorizeState} = useContext(AuthorizationContext);
 
     const register = async (e) => {
         e.preventDefault();
@@ -15,7 +15,8 @@ const Register = () => {
         try {
             let token = await UserApiClient.register(user.email, user.password);
             localStorage.setItem('token', token);
-            setIsAuthorized(true);
+            const userModel = await UserApiClient.getUser(token);
+            setAuthorizeState({state: true, email: user.email, id: userModel.id});
         } catch (e) {
             setError(e.message);
         }

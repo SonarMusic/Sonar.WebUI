@@ -2,7 +2,6 @@ import React, {useContext} from 'react';
 import ListElement from "./ListElement";
 import {PlayerContext} from "../context";
 import {QueueApiClient} from "../utils/ApiClientsInstances";
-import {useQueryClient} from "react-query";
 
 const TracksListElement = ({item, number, removeAction}) => {
     const {setCurrentTrack} = useContext(PlayerContext);
@@ -11,11 +10,8 @@ const TracksListElement = ({item, number, removeAction}) => {
         setCurrentTrack({id: id, title: title})
     }
 
-    const queryClient = useQueryClient();
-
     const enqueueTrack = (id) => {
         QueueApiClient.addTrackToQueue(localStorage.getItem('token'), id);
-        queryClient.invalidateQueries('queue');
     }
 
     return (

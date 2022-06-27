@@ -16,7 +16,7 @@ import Import from "../pages/private/Import";
 import ManageAccess from "../pages/private/ManageAccess";
 
 const AppRouter = () => {
-    const {isAuthorized, isLoading} = useContext(AuthorizationContext);
+    const {authorizeState, isLoading} = useContext(AuthorizationContext);
     const queryClient = new QueryClient();
 
     const [currentTrack, setCurrentTrack] = useState({
@@ -28,7 +28,7 @@ const AppRouter = () => {
         return <Loader/>
 
     return (
-        isAuthorized ?
+        authorizeState.state ?
             <PlayerContext.Provider
                 value={{
                     currentTrack,

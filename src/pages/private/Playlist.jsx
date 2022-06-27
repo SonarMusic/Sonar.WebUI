@@ -1,18 +1,19 @@
 import React, {useContext} from 'react';
 import {useParams} from "react-router-dom";
 import ItemsList from "../../components/ItemsList";
-import {PlaylistApiClient, UserTracksApiClient} from "../../utils/ApiClientsInstances";
+import {PlaylistApiClient, QueueApiClient, UserTracksApiClient} from "../../utils/ApiClientsInstances";
 import Loader from "../../components/UI/Loader";
 import {useQuery, useQueryClient} from "react-query";
 import ListElement from "../../components/ListElement";
-import {PlayerContext} from "../../context";
+import {AuthorizationContext, PlayerContext} from "../../context";
 import TracksListElement from "../../components/TracksListElement";
 
 const Playlist = () => {
     const queryClient = useQueryClient();
+    const {authorizeState} = useContext(AuthorizationContext);
 
     const {isLoading: isTracksLoading, data: allTracks} = useQuery('allTracksOnPlaylistPage', () =>
-        UserTracksApiClient.getAllTacks(localStorage.getItem('token')).then(t => t)
+        UserTracksApiClient.getAllTacks(localStorage.getItem('token')).then(t => t.sort((a, b) => a.ownerId === authorizeState.id ? -1 : 1))
     );
 
     const {isLoading, data: playlist} = useQuery('playlistTracks', () =>
@@ -40,10 +41,8 @@ const Playlist = () => {
         await queryClient.invalidateQueries('playlistTracks');
     }
 
-    const {setCurrentTrack} = useContext(PlayerContext);
-
-    const selectTrack = (id, title) => {
-        setCurrentTrack({id: id, title: title})
+    const enqueuePlaylist = () => {
+        QueueApiClient.addPlaylistToQueue(localStorage.getItem('token'), params.id);
     }
 
     return (
@@ -55,8 +54,11 @@ const Playlist = () => {
                     (item, number) => <TracksListElement key={number} number={number} item={item} removeAction={removeTrackFromPlaylist}/>}
             />
             }
-            <button type="button" id="closeModal" className="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#addTrackToPlModal">
+            <button type="button" id="closeModal" className="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#addTrackToPlModal">
                 Add track
+            </button>
+            <button className="btn btn-primary mt-2 ms-2" onClick={enqueuePlaylist}>
+                Enqueue playlist
             </button>
 
             <div className="modal fade" id="addTrackToPlModal" aria-labelledby="exampleModalLabel" aria-hidden="true">

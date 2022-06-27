@@ -2,21 +2,22 @@ import React, {useContext} from 'react';
 import ItemsList from "../../components/ItemsList";
 import {TracksModuleUrl, UserTracksApiClient} from "../../utils/ApiClientsInstances";
 import axios from "axios";
-import {PlayerContext} from "../../context";
+import {AuthorizationContext, PlayerContext} from "../../context";
 import {QueryClient, useQuery} from "react-query";
 import Loader from "../../components/UI/Loader";
 import TracksListElement from "../../components/TracksListElement";
 
 const Main = () => {
     const {currentTrack, setCurrentTrack} = useContext(PlayerContext);
+    const {authorizeState} = useContext(AuthorizationContext);
 
     const queryClient = new QueryClient();
     const {data, isLoading} = useQuery('mainListTracks', () =>
         UserTracksApiClient.getAllTacks(localStorage.getItem('token'))
-            .then(t => {{console.log(t); return {
-                privateTracks: t.filter(t => t.ownerId === localStorage.getItem('userId')),
-                onlyFansTracks: t.filter(t => t.ownerId !== localStorage.getItem('userId') && t.type === 2),
-                publicTracks: t.filter(t => t.ownerId !== localStorage.getItem('userId') && t.type === 1)
+            .then(t => {{console.log(authorizeState.id); console.log(t); return {
+                privateTracks: t.filter(t => t.ownerId === authorizeState.id),
+                onlyFansTracks: t.filter(t => t.ownerId !== authorizeState.id && t.type === 2),
+                publicTracks: t.filter(t => t.ownerId !== authorizeState.id && t.type === 1)
             }}})
     );
 
